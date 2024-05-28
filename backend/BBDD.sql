@@ -1,6 +1,6 @@
-DROP DATABASE IF EXISTS UrlShortener;
-CREATE DATABASE UrlShortener;
-USE UrlShortener;
+DROP DATABASE IF EXISTS urlshortener;
+CREATE DATABASE urlshortener;
+USE urlshortener;
 
 DROP TABLE IF EXISTS urls;
 CREATE TABLE urls(
@@ -20,7 +20,7 @@ CREATE TABLE users(
 
 DROP TABLE IF EXISTS urlsPorUser;
 CREATE TABLE urlsPorUser(
-	id int primary key not null,
+	id int primary key not null auto_increment,
     url_id int not null,
     user_id int not null,
     CONSTRAINT FK_urls FOREIGN KEY (url_id) REFERENCES urls(id),
