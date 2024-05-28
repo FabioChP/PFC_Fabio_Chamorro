@@ -7,8 +7,8 @@ function main() {
             <Link to="/" className="headerLink">URL SHORTENER</Link>
             <div className="headerLinkGroup">
                 <Link to="/" className="headerLink">Home</Link>
-                <Link to="" className="headerLink">Analytics</Link>
-                <Link to="" className="headerLink">Profile</Link>
+                <Link to="/statistics" className="headerLink">Analytics</Link>
+                <Link to="/user" className="headerLink">Profile</Link>
             </div>
         </header>
         {<Outlet />}
