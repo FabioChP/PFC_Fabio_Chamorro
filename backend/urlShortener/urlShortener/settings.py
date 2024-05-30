@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from corsheaders.defaults import default_headers
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&+5oh1*f#(u1agy6(ny@i-)x25f8x#@krdj99qlax(p(besu(g'
+SECRET_KEY = 'django-insecure-%8pb&02=t76p0ac=@r1w!_(7_)s7pl(tg#3u@#818hse3y!iz6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,19 +32,17 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    "corsheaders",
-    'webserviceapp.apps.WebserviceappConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'webserviceapp.apps.WebserviceappConfig',
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",
-    "django.middleware.common.CommonMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -51,21 +50,18 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',    
+    "http://localhost:3000",
 ]
 
-CORS_ALLOWED_HEADERS = [
-    "accept",
-    "authorization",
-    "content-type",
-    "user-agent",
-    "x-csrftoken",
-    "x-requested-with",
+CORS_ALLOW_HEADERS = (
+    *default_headers,
     "SessionToken",
-]
+)
 
 ROOT_URLCONF = 'urlShortener.urls'
 
@@ -90,6 +86,7 @@ WSGI_APPLICATION = 'urlShortener.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
 
 DATABASES = {
     'default': {

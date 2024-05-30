@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Users, Urls
+from .models import Tusers, Turls
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import check_password, make_password
@@ -12,7 +12,7 @@ error_method = JsonResponse({"error":"Método incorrecto"},status=405)
 def comprobar_url(request, url_comprobar):
     if request.method != "GET":
         return error_method
-    urls = Urls.objects.get(url = url_comprobar)
+    urls = Turls.objects.get(url = url_comprobar)
     return JsonResponse ({"se_repite":len(urls)}, safe = False, json_dumps_params={'ensure_ascii': False})
 
 # --- GESTIÓN DE USUARIOS ---
@@ -23,9 +23,9 @@ def crear_usuario(request):
 		return error_method
 	data = json.loads(request.body)
 	try:
-		user=Users.objects.get(uname=data['username'])
-	except Users.DoesNotExist:
-		new_user = Users(
+		user=Tusers.objects.get(uname=data['username'])
+	except Tusers.DoesNotExist:
+		new_user = Tusers(
 			uname=data['username'],
 			email=data['email'],
 			passwd=make_password(data['password']),
@@ -37,9 +37,9 @@ def crear_usuario(request):
 
 def devolver_usuario(request, nombre_user):
     try:
-        usuario = Users.objects.get(uname = nombre_user)
+        usuario = Tusers.objects.get(uname = nombre_user)
     
-        urls = usuario.urls_set.all()
+        urls = usuario.turls_set.all()
         
         lista_urls = []
         for fila in urls:
@@ -54,7 +54,7 @@ def devolver_usuario(request, nombre_user):
             'nombre':usuario.uname,
             'urls': lista_urls
         }
-    except Users.DoesNotExist:
+    except Tusers.DoesNotExist:
         return JsonResponse({'error': 'El usuario no existe'}, status=405)
     return JsonResponse(respuesta, safe=False, json_dumps_params={'ensure_ascii': False})
 
