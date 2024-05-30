@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import *
+from .models import Users, Urls
 from django.http import JsonResponse
 
 # Create your views here.
@@ -24,8 +24,8 @@ def devolver_usuario(request, nombre_user):
         lista_urls = []
         for fila in urls:
             diccionario = {}
-            diccionario['old_route']
             diccionario['new_route']
+            diccionario['old_route']
             diccionario['clicks']
             diccionario['fcreacion']
             lista_urls.append(diccionario)
