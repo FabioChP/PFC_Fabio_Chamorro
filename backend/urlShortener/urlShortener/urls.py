@@ -22,4 +22,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('urls/', views.comprobar_url),
     path('crear_user/', views.crear_usuario),
-]
+    path('usuario/<str:username>', views.devolver_usuario)]

@@ -35,9 +35,9 @@ def crear_usuario(request):
 	else:
 		return JsonResponse({'error': 'Usuario existente'}, status=404)
 
-def devolver_usuario(request, nombre_user):
+def devolver_usuario(request, username):
     try:
-        usuario = Tusers.objects.get(uname = nombre_user)
+        usuario = Tusers.objects.get(uname = username)
     
         urls = usuario.turls_set.all()
         
@@ -52,10 +52,11 @@ def devolver_usuario(request, nombre_user):
         
         respuesta = {
             'nombre':usuario.uname,
+            'email': usuario.email,
             'urls': lista_urls
         }
     except Tusers.DoesNotExist:
-        return JsonResponse({'error': 'El usuario no existe'}, status=405)
+        return JsonResponse({'error': 'El usuario no existe'}, status=404)
     return JsonResponse(respuesta, safe=False, json_dumps_params={'ensure_ascii': False})
 
 # --- SIGUIENTE PUNTO ---
