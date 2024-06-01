@@ -3,7 +3,8 @@ from .models import Tusers, Turls
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import check_password, make_password
-import json
+import datetime
+import json, jwt
 
 # Create your views here.
 
@@ -14,6 +15,36 @@ def comprobar_url(request, url_comprobar):
         return error_method
     urls = Turls.objects.get(url = url_comprobar)
     return JsonResponse ({"se_repite":len(urls)}, safe = False, json_dumps_params={'ensure_ascii': False})
+
+# --- GESTIÓN DEL TOKEN ---
+
+SECRET_KEY = '3st@Cl4v3es1mp0s1bl3deR0mp3ryN03sp3r0qu3n@d1eL0inTente'
+
+def create_token(nombreusuario):
+	payload = {
+		'nombreusuario': nombreusuario,
+		'exp': datetime.datetime.utcnow() + datetime.timedelta(days=1),
+		'iat': datetime.datetime.utcnow()
+	}
+	token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+	return token
+
+def verify_token(request):
+	token = request.META.get('HTTP_AUTHORIZATION', None)
+	if not token:
+		return JsonResponse({'message': 'Token is missing'}, status=401), None	
+
+	try:
+		if token.startswith('Bearer '):
+			token = token.split(' ')[1]
+		
+		payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+		return None, payload
+	except jwt.ExpiredSignatureError:
+		return JsonResponse({'message':'Token has expired!'}, status=401), None
+	except jwt.InvalidTokenError:
+		return JsonResponse({'message': 'Invalid token!'}, status=401), None	
+
 
 # --- GESTIÓN DE USUARIOS ---
 
@@ -58,4 +89,8 @@ def devolver_usuario(request, nombre_user):
         return JsonResponse({'error': 'El usuario no existe'}, status=405)
     return JsonResponse(respuesta, safe=False, json_dumps_params={'ensure_ascii': False})
 
-# --- SIGUIENTE PUNTO ---
+# --- GESTIÓN DE SESIONES ---
+
+@csrf_exempt
+def inicio_sesion(request):
+    return JsonResponse({'error': 'Usuario existente'}, status=404)

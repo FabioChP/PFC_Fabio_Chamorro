@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-from corsheaders.defaults import default_headers
+from corsheaders.defaults import default_headers, default_methods
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -61,6 +61,10 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_HEADERS = (
     *default_headers,
     "SessionToken",
+)
+
+CORS_ALLOW_METHODS = (
+    *default_methods,
 )
 
 ROOT_URLCONF = 'urlShortener.urls'
