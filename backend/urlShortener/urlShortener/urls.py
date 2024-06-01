@@ -23,4 +23,5 @@ urlpatterns = [
     path('urls/', views.comprobar_url),
     path('crear_user/', views.crear_usuario),
     path('iniciar_sesion', views.inicio_sesion, name='iniciar_sesion'),
+    path('usuario/<str:username>', views.devolver_usuario)
 ]
