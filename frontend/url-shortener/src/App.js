@@ -6,6 +6,7 @@ import Login from "./sites/login/login";
 import Registro from "./sites/registro/registro";
 import Stats from "./sites/stats/stats"
 import User from "./sites/user/user"
+import Redirect from "./sites/redirect/redirect";
  
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/register" element={<Registro />} />
           <Route path="/statistics" element={<Stats />} />
           <Route path="/user" element={<User />} />
+          <Route path="/redirect/:new_url" element={<Redirect />} />
         </Route>
       </Routes>
     </div>

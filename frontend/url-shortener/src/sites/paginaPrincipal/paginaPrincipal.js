@@ -4,6 +4,7 @@ import React, { useEffect,useLayoutEffect,useState } from "react";
 
 function PaginaPrincipal() {
     const [urlOg, setUrlOg] = useState("");
+
     const [urlNew, setUrlNew] = useState("");
 
     const onChangeUrl = (event) => {
@@ -12,17 +13,11 @@ function PaginaPrincipal() {
 
     const Subir = (event) => {
         event.preventDefault();
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_0123456789';
-        let result = '';
-        for (let i = 0; i < 10; i++) {
-            result += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        setUrlNew(result)
         if (urlOg==""){
             alert("La url no puede estar vacía")
         } else {
-            axios.post("http://localhost:8000/new_url", {"UrlOG":urlOg,"UrlNew":urlNew}
-            ).then(response => {
+            axios.post("http://localhost:8000/crear_url", {"UrlOG":urlOg,},
+        {headers:{session_token:sessionStorage.getItem("token")}}).then(response => {
                 alert("Url creada con exito");
             }). catch(error => {
                 alert("Recurso no encontrado");

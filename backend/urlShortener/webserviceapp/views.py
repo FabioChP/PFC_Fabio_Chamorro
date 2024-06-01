@@ -3,7 +3,7 @@ from .models import Tusers, Turls
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import check_password, make_password
-import json
+import json, random
 
 # Create your views here.
 
@@ -59,3 +59,22 @@ def devolver_usuario(request, nombre_user):
     return JsonResponse(respuesta, safe=False, json_dumps_params={'ensure_ascii': False})
 
 # --- SIGUIENTE PUNTO ---
+
+# --- GESTIÓN DE URLS ---
+
+def crear_cadena():
+    chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_0123456789'
+    result = ''
+    for i in range(10):
+        result = result + chars[random.randint(0, len(chars)-1)]
+    return result
+
+def crear_url(request):
+    if request.method != "POST":
+        return error_method
+    data = json.loads(request.body)
+    try:
+        oldurl = Turls.objects.get(old_route = data["UrlOg"])
+    except Turls.DoesNotExist:
+        newUrl = crear_cadena
+        return JsonResponse({'error': newUrl}, status=405)  
