@@ -17,8 +17,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Registro />} />
           <Route path="/statistics" element={<Stats />} />
-          <Route path="/user" element={<User />} />
           <Route path="/redirect/:new_url" element={<Redirect />} />
+          <Route path="/user/:username" element={<User />} />
         </Route>
       </Routes>
     </div>
