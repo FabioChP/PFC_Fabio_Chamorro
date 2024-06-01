@@ -3,6 +3,8 @@ from .models import Tusers, Turls
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import check_password, make_password
+import datetime
+from datetime import date
 import json, random
 
 # Create your views here.
@@ -70,12 +72,33 @@ def crear_cadena():
         result = result + chars[random.randint(0, len(chars)-1)]
     return result
 
+@csrf_exempt
 def crear_url(request):
     if request.method != "POST":
         return error_method
     data = json.loads(request.body)
+    session_token = json.loads(request.headers)
     try:
-        oldurl = Turls.objects.get(old_route = data["UrlOg"])
-    except Turls.DoesNotExist:
-        newUrl = crear_cadena
-        return JsonResponse({'error': newUrl}, status=405)  
+        user = Tusers.objects.get(session_token = session_token)
+    except Tusers.DoesNotExist:
+        return JsonResponse({'error': "Es necesario iniciar sesion"}, status=403)
+
+    old_route = data["url"]
+    if session_token.__isn:
+        try:
+            old_url = Turls.objects.get(old_route = old_route)
+        except Turls.DoesNotExist:
+            newroute = crear_cadena()
+            newUrl = Turls(
+                old_route = old_route,
+                new_route = newroute,
+                clicks = 0,
+                fcreacion = date.today(),
+                creator = user
+            )
+            newUrl.save()
+            return JsonResponse(newroute, safe=False, json_dumps_params={'ensure_ascii': False})
+        else:
+            return JsonResponse({'error': "No se ha podido crear la Url"}, status=404)
+            
+    

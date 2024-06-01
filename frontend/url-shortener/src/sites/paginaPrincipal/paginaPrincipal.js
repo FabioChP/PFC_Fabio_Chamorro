@@ -4,9 +4,8 @@ import React, { useEffect,useLayoutEffect,useState } from "react";
 
 function PaginaPrincipal() {
     const [urlOg, setUrlOg] = useState("");
-
     const [urlNew, setUrlNew] = useState("");
-
+    
     const onChangeUrl = (event) => {
         setUrlOg(event.target.value)
     }
@@ -16,16 +15,13 @@ function PaginaPrincipal() {
         if (urlOg==""){
             alert("La url no puede estar vacía")
         } else {
-            axios.post("http://localhost:8000/crear_url", {"UrlOG":urlOg,},
+            axios.post("http://localhost:8000/crear_url", {"url":urlOg,},
         {headers:{session_token:sessionStorage.getItem("token")}}).then(response => {
                 alert("Url creada con exito");
             }). catch(error => {
                 alert("Recurso no encontrado");
             });
         }
-
-
-
 
     }
 
