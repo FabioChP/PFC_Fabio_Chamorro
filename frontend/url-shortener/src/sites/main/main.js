@@ -1,14 +1,20 @@
 import { Link, Outlet } from "react-router-dom";
 import "./main.css"
+import { useEffect } from "react";
 
-function main() {
+export default function Main() {
 
 let user_link = "/user/" + sessionStorage.getItem("UNAME")
 let perfil = <Link to="/login" className="headerLink">Iniciar sesión</Link>
-if (user_link != "/user/") {
-    perfil = <Link to={user_link} className="headerLink">{sessionStorage.getItem("UNAME")}</Link>
-}
-    
+
+useEffect(() => {
+    function reload() {
+        if (user_link != "/user/null") {
+            perfil = <Link to={user_link} className="headerLink">{sessionStorage.getItem("UNAME")}</Link>
+        }
+    }
+
+})
     return <>
         <header>
             <Link to="/" className="headerLink">URL SHORTENER</Link>
@@ -24,5 +30,3 @@ if (user_link != "/user/") {
         </footer>
     </>
 }
-
-export default main;

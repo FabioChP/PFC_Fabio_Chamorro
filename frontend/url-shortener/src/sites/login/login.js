@@ -3,6 +3,7 @@ import "./login.css"
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import reload from "../main/main"
 
 function Login() {
 
@@ -29,6 +30,7 @@ function Login() {
                 sessionStorage.setItem("UNAME", response.data.uname)
                 console.log("Sesión iniciada")
                 navigate("/")
+                window.location.reload(false)
             })
             .catch(error => {
                 console.error("Error al iniciar sesion:", error);
