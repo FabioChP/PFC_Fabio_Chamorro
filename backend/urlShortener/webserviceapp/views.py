@@ -4,7 +4,9 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import check_password, make_password
 import datetime
-import json, jwt
+import json
+import jwt
+
 
 # Create your views here.
 
@@ -94,4 +96,20 @@ def devolver_usuario(request, username):
 
 @csrf_exempt
 def inicio_sesion(request):
-    return JsonResponse({'error': 'Usuario existente'}, status=404)
+    if request.method == 'POST':
+        try:
+            data=json.loads(request.body)
+            user=Tusers.objects.get(email=data['email'])
+            print (user.passwd)
+            print("\n" + str(check_password(data['password'], user.passwd)))
+            if check_password(data['password'], user.passwd):
+                token = create_token(user.uname)
+                user.session_token = token
+                user.save()
+                return JsonResponse({'token': token}, status=200)
+            else:
+                return JsonResponse({'error': 'contraseña incorrecta'}, status=401)
+        except Tusers.DoesNotExist:
+            return JsonResponse({'error': 'Usuario no encontrado'}, status=404)
+    else:
+        return JsonResponse({'error': 'metodo no soportado'}, status=405)

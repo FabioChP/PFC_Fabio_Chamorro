@@ -20,7 +20,7 @@ function Login() {
         if (email == "" || password == "") {
             alert("No puede haber campos en blanco");
         } else {
-            axios.post("http://localhost:8000/iniciar_sesion", {"email":email, "password":password})
+            axios.post("http://localhost:8000/iniciar_sesion/", {"email":email, "password":password})
             .then(response => {
                 sessionStorage.setItem("AUTH_TOKEN", response.data.token)
                 console.log("Sesión iniciada")
