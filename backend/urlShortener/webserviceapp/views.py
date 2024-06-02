@@ -77,10 +77,10 @@ def devolver_usuario(request, username):
         lista_urls = []
         for fila in urls:
             diccionario = {}
-            diccionario['new_route']
-            diccionario['old_route']
-            diccionario['clicks']
-            diccionario['fcreacion']
+            diccionario['new_route'] = fila.new_route
+            diccionario['old_route'] = fila.old_route
+            diccionario['clicks'] = fila.clicks
+            diccionario['fcreacion'] = fila.fcreacion
             lista_urls.append(diccionario)
         
         respuesta = {
@@ -106,7 +106,7 @@ def inicio_sesion(request):
                 token = create_token(user.uname)
                 user.session_token = token
                 user.save()
-                return JsonResponse({'token': token}, status=200)
+                return JsonResponse({'token': token, 'uname':user.uname}, status=200)
             else:
                 return JsonResponse({'error': 'contraseña incorrecta'}, status=401)
         except Tusers.DoesNotExist:

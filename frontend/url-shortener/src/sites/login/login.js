@@ -2,8 +2,11 @@ import { Link } from "react-router-dom";
 import "./login.css"
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -23,7 +26,9 @@ function Login() {
             axios.post("http://localhost:8000/iniciar_sesion/", {"email":email, "password":password})
             .then(response => {
                 sessionStorage.setItem("AUTH_TOKEN", response.data.token)
+                sessionStorage.setItem("UNAME", response.data.uname)
                 console.log("Sesión iniciada")
+                navigate("/")
             })
             .catch(error => {
                 console.error("Error al iniciar sesion:", error);
