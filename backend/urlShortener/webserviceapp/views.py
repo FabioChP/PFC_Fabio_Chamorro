@@ -152,5 +152,18 @@ def crear_url(request):
         newUrl.save()
         return JsonResponse({"new_url" : newroute}, safe=False, json_dumps_params={'ensure_ascii': False})
     else:
-        return JsonResponse({'error': "No se ha podido crear la Url"}, status=404)
-            
+        return JsonResponse({'error': "No se ha podido crear la Url"}, status=400)
+
+# def devolver_url(request, old_url):
+#     if request.method != "GET":
+#         return error_method
+    
+#     try:
+#         url = Turls.objects.get(old_route = old_url)
+#         respuesta = {
+#             "new_url":  url.new_route
+#         }
+#         return JsonResponse(respuesta, safe=False, json_dumps_params={'ensure_ascii': False})
+#     except Tusers.DoesNotExist:
+#         return JsonResponse({'error': "La url no existe"}, status=404)
+    
