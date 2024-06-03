@@ -6,7 +6,8 @@ import Login from "./sites/login/login";
 import Registro from "./sites/registro/registro";
 import Stats from "./sites/stats/stats"
 import User from "./sites/user/user"
-import Redirect from "./sites/redirect/redirect";
+import Logout from "./sites/logout/logout";
+// import Redirect from "./sites/redirect/redirect";
  
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/statistics" element={<Stats />} />
           <Route path="/redirect/:new_url" element={<Redirect />} />
           <Route path="/user/:username" element={<User />} />
+          <Route path="/logout" element={<Logout/>} />
         </Route>
       </Routes>
     </div>

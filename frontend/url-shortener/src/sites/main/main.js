@@ -9,6 +9,8 @@ let perfil = <Link to="/login" className="headerLink">Iniciar sesión</Link>
 
 if (user_link != "/user/null") {
     perfil = <Link to={user_link} className="headerLink">{sessionStorage.getItem("UNAME")}</Link>
+} else {
+    perfil = <Link to="/login" className="headerLink">Iniciar sesión</Link>
 }
     return <>
         <header>
