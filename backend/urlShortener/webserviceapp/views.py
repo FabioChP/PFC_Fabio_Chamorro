@@ -114,7 +114,6 @@ def cierre_sesion(request):
         return JsonResponse({'error': 'metodo no soportado'}, status=405)
 
 
-
 # --- GESTIÓN DE URLS ---
 
 
