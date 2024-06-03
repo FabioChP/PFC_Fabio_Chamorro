@@ -131,8 +131,8 @@ def crear_url(request):
         return error_method
     
     data = json.loads(request.body)
+
     session_token = request.headers.get("Authorization", None)
-    
     try:
         user = Tusers.objects.get(session_token = session_token)
     except Tusers.DoesNotExist:
