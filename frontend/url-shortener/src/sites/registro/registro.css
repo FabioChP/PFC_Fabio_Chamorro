@@ -1,6 +1,6 @@
 .registro-caja {
-    margin: auto;
-    background-color: lightblue;
+    margin: 6% auto;
+    background-color: #ccbfae;
     border-radius: 20px;
     width: 35%;
     padding: 2.5% 0%;
@@ -28,9 +28,12 @@
 }
 
 .registro-button {
+    background-color: #065ce7;
+    border: 1px solid #010101;
+    color: #e5d5c4;
     font-weight: bold;
     width: 25%;
     margin-top: 1.5%;
     margin-bottom: 2%;
-    padding: 0.5%;
+    padding: 1.5%;
 }
