@@ -1,11 +1,19 @@
 .principal-area {
-    margin: 13% 0;
+    margin: 7% 0;
+}
+
+.principal-caja {
+    margin: 2% auto;
+    background-color: #ccbfae;
+    border-radius: 20px;
+    width: 80%;
+    padding: 2% 0%;
 }
 
 .principal-textInput {
     margin-top: 3%;
     border: 1px solid #010101;
-    width: 35%;
+    width: 45%;
     padding: 1%;
     color: #010101;
     font-weight: bold;
