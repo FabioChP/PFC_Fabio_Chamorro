@@ -4,7 +4,7 @@ class Tusers(models.Model):
     uname = models.CharField(max_length=50)
     email = models.CharField(max_length=100)
     passwd = models.CharField(max_length=100)
-    session_token = models.CharField(max_length=1000)
+    session_token = models.CharField(max_length=1000, blank=True, null=True)
 
     class Meta:
         managed = False

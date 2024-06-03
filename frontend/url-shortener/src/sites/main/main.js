@@ -1,14 +1,22 @@
 import { Link, Outlet } from "react-router-dom";
 import "./main.css"
+import { useEffect } from "react";
 
-function main() {
+export default function Main() {
+
+let user_link = "/user/" + sessionStorage.getItem("UNAME")
+let perfil = <Link to="/login" className="headerLink">Iniciar sesión</Link>
+
+if (user_link != "/user/null") {
+    perfil = <Link to={user_link} className="headerLink">{sessionStorage.getItem("UNAME")}</Link>
+}
     return <>
         <header>
             <Link to="/" className="headerLink">URL SHORTENER</Link>
             <div className="headerLinkGroup">
-                <Link to="/" className="headerLink">Home</Link>
-                <Link to="/statistics" className="headerLink">Analytics</Link>
-                <Link to="/user" className="headerLink">Profile</Link>
+                <Link to="/" className="headerLink">Inicio</Link>
+                <Link to="/statistics" className="headerLink">Estadísticas</Link>
+                {perfil}
             </div>
         </header>
         {<Outlet />}
@@ -17,5 +25,3 @@ function main() {
         </footer>
     </>
 }
-
-export default main;
