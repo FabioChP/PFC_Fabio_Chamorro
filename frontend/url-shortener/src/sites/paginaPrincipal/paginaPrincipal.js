@@ -1,6 +1,6 @@
 import "./paginaPrincipal.css";
 import axios from "axios";
-import React, { useEffect,useLayoutEffect,useState } from "react";
+import React, {useState} from "react";
 
 function PaginaPrincipal() {
     const [urlOg, setUrlOg] = useState("");
@@ -22,23 +22,26 @@ function PaginaPrincipal() {
             console.log(sessionStorage.getItem("AUTH_TOKEN") )
             axios.post("http://localhost:8000/crear_url/", {"url":urlOg,},
         {headers:headers}).then(response => {
-                console.log(response.data)
                 alert("Url creada con exito");
+                setUrlNew("https://localhost:3000/redirect/"+response.data.new_url)
             }). catch(error => {
-                console.log(error)
-                alert("Recurso no encontrado");
+                alert("Necesitas tener la sesión iniciada");
             });
         }
 
     }
 
     return <>
-        <h1>URL SHORTENER</h1>
-        <form>
-            <input onChange={onChangeUrl} id="url" className="textInput" type="url" placeholder={"https://www.example.url/"}></input>
-            <input onClick={Subir} type="submit" id="submit" value="Subir"/>
-        </form>
-        <h1>{urlNew}</h1>
+        <div className="principal-area">
+            <h1>URL SHORTENER</h1>
+            <form>
+                <input onChange={onChangeUrl} id="url" className="principal-textInput" type="url" placeholder={"https://www.example.url/"}></input>
+                <input onClick={Subir} className="principal-button" type="submit" id="submit" value="Subir"/>
+            </form>
+            <div className="principal-divSalida">
+                <h3>Tu nueva url es: <a href={urlNew}>{urlNew}</a></h3>
+            </div>
+        </div>
     </>
 }
 

@@ -1,9 +1,25 @@
-.textInput {
-    width: 35%;
-    padding: 0.5%;
+.principal-area {
+    margin: 13% 0;
 }
 
-button {
+.principal-textInput {
+    margin-top: 3%;
+    border: 1px solid #010101;
+    width: 35%;
+    padding: 1%;
+    color: #010101;
+    font-weight: bold;
+}
+
+.principal-button {
+    background-color: #065ce7;
+    border: 1px solid #010101;
     width: 5%;
-    padding: 0.5%;
+    padding: 1%;
+    color: #e5d5c4;
+    font-weight: bold;
+}
+
+.principal-divSalida {
+    margin: 3% 0;
 }

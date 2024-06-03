@@ -1,3 +1,10 @@
+.login-caja {
+    margin: 9% auto;
+    background-color: #ccbfae;
+    border-radius: 20px;
+    width: 35%;
+    padding: 2.5% 0%;
+}
 
 .login-form {
     margin: auto;
@@ -7,18 +14,21 @@
 }
 
 .login-textInput {
-    width: 35%;
-    margin-top: 1.5%;
-    padding: 0.5%;
+    width: 80%;
+    margin-top: 3%;
+    padding: 1.5%;
 }
 
 .login-formText {
-    margin-top: 1%;
+    margin-top: 2%;
 }
 
 .login-button {
+    background-color: #065ce7;
+    border: 1px solid #010101;
+    color: #e5d5c4;
     font-weight: bold;
     width: 25%;
-    margin-top: 0.5%;
-    padding: 0.5%;
+    margin-top: 3%;
+    padding: 1.5%;
 }

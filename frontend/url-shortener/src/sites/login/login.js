@@ -40,13 +40,15 @@ function Login() {
     }
 
     return <>
-        <h1>LOGIN</h1>
-        <form className="login-form">
-            <input onChange={onChangeEmail} className="login-textInput" type="email" placeholder="Email"></input>
-            <input onChange={onChangePassword} className="login-textInput" type="password" placeholder="Contraseña"></input>
-            <p className="login-formText">¿No tienes cuenta? Registrate <Link to="/register">aquí</Link>.</p>
-            <input onClick={Publish} className="login-button" type="submit" value="Login" />
-        </form>
+        <div className="login-caja">
+            <h1>LOGIN</h1>
+            <form className="login-form">
+                <input onChange={onChangeEmail} className="login-textInput" type="email" placeholder="Email"></input>
+                <input onChange={onChangePassword} className="login-textInput" type="password" placeholder="Contraseña"></input>
+                <p className="login-formText">¿No tienes cuenta? Registrate <Link to="/register">aquí</Link>.</p>
+                <input onClick={Publish} className="login-button" type="submit" value="Login" />
+            </form>
+        </div>
     </>
 
 }
