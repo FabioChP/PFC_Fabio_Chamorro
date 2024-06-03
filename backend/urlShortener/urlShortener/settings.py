@@ -60,13 +60,14 @@ CORS_ALLOWED_ORIGINS = [
 
 CORS_ALLOW_HEADERS = (
     *default_headers,
-    "SessionToken",
+    "Authorization",
 )
 
 CORS_ALLOW_METHODS = (
     *default_methods,
     "GET",
     "POST",
+    "OPTIONS",
 
 )
 
