@@ -115,6 +115,19 @@ def inicio_sesion(request):
             return JsonResponse({'error': 'Usuario no encontrado'}, status=404)
     else:
         return JsonResponse({'error': 'metodo no soportado'}, status=405)
+    
+@csrf_exempt
+def cierre_sesion(request):
+    if request.method == 'PATCH':	
+        try:
+            user = Tusers.objects.get(session_token = request.headers.get("Authorization", None))
+            user.session_token = None
+            user.save()
+            return JsonResponse({'message':'Sesión cerrada con éxito'}, status=200)
+        except Tusers.DoesNotExist:
+            return JsonResponse({'error':'Usuario no logueado'}, status=404)
+    else:
+        return JsonResponse({'error': 'metodo no soportado'}, status=405)
 
 
 # --- GESTIÓN DE URLS ---
