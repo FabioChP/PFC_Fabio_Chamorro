@@ -7,14 +7,9 @@ export default function Main() {
 let user_link = "/user/" + sessionStorage.getItem("UNAME")
 let perfil = <Link to="/login" className="headerLink">Iniciar sesión</Link>
 
-useEffect(() => {
-    function reload() {
-        if (user_link != "/user/null") {
-            perfil = <Link to={user_link} className="headerLink">{sessionStorage.getItem("UNAME")}</Link>
-        }
-    }
-
-})
+if (user_link != "/user/null") {
+    perfil = <Link to={user_link} className="headerLink">{sessionStorage.getItem("UNAME")}</Link>
+}
     return <>
         <header>
             <Link to="/" className="headerLink">URL SHORTENER</Link>
