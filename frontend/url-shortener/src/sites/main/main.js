@@ -15,7 +15,9 @@ if (user_link != "/user/null") {
 } else {
     perfil = <Link to="/login" className="headerLink">Iniciar sesión</Link>
     logout = <Link to="/register" className="headerLink">Registro</Link>
+    logout = <Link to="/register" className="headerLink">Registrarse</Link>
 }
+
     return <>
         <header>
             <Link to="/"><img src={logo} className="header-logo"/></Link>
@@ -23,6 +25,7 @@ if (user_link != "/user/null") {
                 <Link to="/" className="headerLink">Inicio</Link>
                 <Link to="/statistics" className="headerLink">Estadísticas</Link>
                 {perfil}
+                {logout}
             </div>
         </header>
         {<Outlet />}
