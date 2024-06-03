@@ -22,7 +22,7 @@ function PaginaPrincipal() {
             axios.post("http://localhost:8000/crear_url/", {"url":urlOg,},
         {headers:headers}).then(response => {
                 alert("Url creada con exito");
-                setUrlNew("https://localhost:3000/redirect/"+response.data.new_url)
+                setUrlNew("http://localhost:3000/redirect/"+response.data.new_url)
             }). catch(error => {
                 if (error.response.status == 500) {
                     alert("Necesitas tener la sesión iniciada");
