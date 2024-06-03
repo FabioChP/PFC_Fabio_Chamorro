@@ -4,9 +4,8 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import check_password, make_password
 import datetime
-import json
-import jwt
-
+from datetime import date
+import json, random, jwt
 
 # Create your views here.
 
@@ -92,6 +91,7 @@ def devolver_usuario(request, username):
         return JsonResponse({'error': 'El usuario no existe'}, status=404)
     return JsonResponse(respuesta, safe=False, json_dumps_params={'ensure_ascii': False})
 
+
 # --- GESTIÓN DE SESIONES ---
 
 @csrf_exempt
@@ -113,3 +113,44 @@ def inicio_sesion(request):
             return JsonResponse({'error': 'Usuario no encontrado'}, status=404)
     else:
         return JsonResponse({'error': 'metodo no soportado'}, status=405)
+
+
+# --- GESTIÓN DE URLS ---
+
+
+def crear_cadena():
+    chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_0123456789'
+    result = ''
+    for i in range(10):
+        result = result + chars[random.randint(0, len(chars)-1)]
+    return result
+
+@csrf_exempt
+def crear_url(request):
+    if request.method != "POST":
+        return error_method
+    data = json.loads(request.body)
+    session_token = json.loads(request.headers)
+    try:
+        user = Tusers.objects.get(session_token = session_token)
+    except Tusers.DoesNotExist:
+        return JsonResponse({'error': "Es necesario iniciar sesion"}, status=403)
+
+    old_route = data["url"]
+    if session_token.__isn:
+        try:
+            old_url = Turls.objects.get(old_route = old_route)
+        except Turls.DoesNotExist:
+            newroute = crear_cadena()
+            newUrl = Turls(
+                old_route = old_route,
+                new_route = newroute,
+                clicks = 0,
+                fcreacion = date.today(),
+                creator = user
+            )
+            newUrl.save()
+            return JsonResponse(newroute, safe=False, json_dumps_params={'ensure_ascii': False})
+        else:
+            return JsonResponse({'error': "No se ha podido crear la Url"}, status=404)
+            

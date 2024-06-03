@@ -66,7 +66,8 @@ CORS_ALLOW_HEADERS = (
 CORS_ALLOW_METHODS = (
     *default_methods,
     "GET",
-    "POST"
+    "POST",
+
 )
 
 ROOT_URLCONF = 'urlShortener.urls'

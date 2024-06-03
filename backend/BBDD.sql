@@ -8,7 +8,7 @@ CREATE TABLE tUsers(
     uname varchar(50) not null,
     email varchar(100) not null,
     passwd varchar(100) not null,
-    sesion_token varchar(1000)
+    session_token varchar(1000)
 );
 
 DROP TABLE IF EXISTS tUrls;
