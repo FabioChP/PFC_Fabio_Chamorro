@@ -7,6 +7,8 @@ import datetime
 from datetime import date
 import json, random, jwt
 
+import logging
+
 # Create your views here.
 
 error_method = JsonResponse({"error":"Método incorrecto"},status=405)
@@ -129,28 +131,31 @@ def crear_cadena():
 def crear_url(request):
     if request.method != "POST":
         return error_method
+    
     data = json.loads(request.body)
-    session_token = json.loads(request.headers)
+    logging.warning(request.headers)
+    session_token = request.headers.get("Authorization", None)
+    logging.warning(" inicio : "+str(session_token)+" : fin ")
+    
     try:
         user = Tusers.objects.get(session_token = session_token)
     except Tusers.DoesNotExist:
-        return JsonResponse({'error': "Es necesario iniciar sesion"}, status=403)
+        return JsonResponse({'error': "request.headers"}, status=403)
 
     old_route = data["url"]
-    if session_token.__isn:
-        try:
-            old_url = Turls.objects.get(old_route = old_route)
-        except Turls.DoesNotExist:
-            newroute = crear_cadena()
-            newUrl = Turls(
-                old_route = old_route,
-                new_route = newroute,
-                clicks = 0,
-                fcreacion = date.today(),
-                creator = user
-            )
-            newUrl.save()
-            return JsonResponse(newroute, safe=False, json_dumps_params={'ensure_ascii': False})
-        else:
-            return JsonResponse({'error': "No se ha podido crear la Url"}, status=404)
+    try:
+        old_url = Turls.objects.get(old_route = old_route)
+    except Turls.DoesNotExist:
+        newroute = crear_cadena()
+        newUrl = Turls(
+            old_route = old_route,
+            new_route = newroute,
+            clicks = 0,
+            fcreacion = date.today(),
+            creator = user
+        )
+        newUrl.save()
+        return JsonResponse({"new_url" : newroute}, safe=False, json_dumps_params={'ensure_ascii': False})
+    else:
+        return JsonResponse({'error': "No se ha podido crear la Url"}, status=404)
             
