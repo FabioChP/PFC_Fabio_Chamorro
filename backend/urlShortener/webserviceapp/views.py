@@ -30,23 +30,7 @@ def create_token(nombreusuario):
 		'iat': datetime.datetime.utcnow()
 	}
 	token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-	return token
-
-def verify_token(request):
-	token = request.META.get('HTTP_AUTHORIZATION', None)
-	if not token:
-		return JsonResponse({'message': 'Token is missing'}, status=401), None	
-
-	try:
-		if token.startswith('Bearer '):
-			token = token.split(' ')[1]
-		
-		payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-		return None, payload
-	except jwt.ExpiredSignatureError:
-		return JsonResponse({'message':'Token has expired!'}, status=401), None
-	except jwt.InvalidTokenError:
-		return JsonResponse({'message': 'Invalid token!'}, status=401), None	
+	return token	
 
 
 # --- GESTIÓN DE USUARIOS ---
@@ -115,6 +99,20 @@ def inicio_sesion(request):
             return JsonResponse({'error': 'Usuario no encontrado'}, status=404)
     else:
         return JsonResponse({'error': 'metodo no soportado'}, status=405)
+    
+@csrf_exempt
+def cierre_sesion(request):
+    if request.method == 'PATCH':	
+        try:
+            user = Tusers.objects.get(session_token = request.headers.get("Authorization", None))
+            user.session_token = None
+            user.save()
+            return JsonResponse({'message':'Sesión cerrada con éxito'}, status=200)
+        except Tusers.DoesNotExist:
+            return JsonResponse({'error':'Usuario no logueado'}, status=404)
+    else:
+        return JsonResponse({'error': 'metodo no soportado'}, status=405)
+
 
 
 # --- GESTIÓN DE URLS ---
@@ -133,10 +131,8 @@ def crear_url(request):
         return error_method
     
     data = json.loads(request.body)
-    logging.warning(request.headers)
+
     session_token = request.headers.get("Authorization", None)
-    logging.warning(" inicio : "+str(session_token)+" : fin ")
-    
     try:
         user = Tusers.objects.get(session_token = session_token)
     except Tusers.DoesNotExist:
