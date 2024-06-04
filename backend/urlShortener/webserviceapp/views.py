@@ -171,6 +171,11 @@ def crear_url(request):
  
 # --- REDIRECCIÓN ---
 
+def aumetar_clicks(url):
+    clicks_actuales = url.clicks
+    url.clicks = clicks_actuales + 1
+    url.save()
+
 def redirect_url(request, url):
     if request.method != "GET":
         return error_method
@@ -180,7 +185,7 @@ def redirect_url(request, url):
         respuesta = {
             "old_url":url.old_route,
         }
+        aumetar_clicks(url)
         return JsonResponse(respuesta, safe=False, json_dumps_params={'ensure_ascii': False})
     except Turls.DoesNotExist:
         return JsonResponse({"error": "La url no existe"}, status=404)
-        return JsonResponse({'error': "No se ha podido crear la Url"}, status=400)
