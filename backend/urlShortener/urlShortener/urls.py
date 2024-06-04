@@ -26,6 +26,8 @@ urlpatterns = [
     path('iniciar_sesion/', views.inicio_sesion, name='iniciar_sesion'),
     path('usuario/<str:username>', views.devolver_usuario),
     path('cerrar_sesion/', views.cierre_sesion),
-    path('redirect/<str:url>', views.redirect_url)
+    path('redirect/<str:url>', views.redirect_url),
+    path('url_populares/', views.devolver_urls_populares),
+    path('url_nuevas/', views.devolver_urls_nuevas)
     # path('url_por_url/<str:old_url>', views.devolver_url)
 ]
