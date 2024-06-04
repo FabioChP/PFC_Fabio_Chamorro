@@ -1,0 +1,18 @@
+.redirect-title {
+    margin-top: 2.5%;
+    margin-bottom: 5%;
+}
+
+.redirect-button {
+    background-color: #065ce7;
+    border: 1px solid #010101;
+    color: #e5d5c4;
+    font-weight: bold;
+    width: 20%;
+    margin-top: 3%;
+    padding: 1.5%;
+}
+
+.redirect-legal-text {
+    margin-top: 12.5%;
+}

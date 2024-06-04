@@ -120,8 +120,15 @@ def cierre_sesion(request):
 def crear_cadena():
     chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_0123456789'
     result = ''
-    for i in range(10):
-        result = result + chars[random.randint(0, len(chars)-1)]
+    repeat = True
+    while repeat == True:
+        repeat = False
+        for i in range(10):
+            result = result + chars[random.randint(0, len(chars)-1)]
+        urls = Turls.objects.all()
+        for fila in urls:
+            if result == fila.new_route:
+                repeat = True
     return result
 
 @csrf_exempt
@@ -171,6 +178,11 @@ def crear_url(request):
  
 # --- REDIRECCIÓN ---
 
+def aumetar_clicks(url):
+    clicks_actuales = url.clicks
+    url.clicks = clicks_actuales + 1
+    url.save()
+
 def redirect_url(request, url):
     if request.method != "GET":
         return error_method
@@ -180,7 +192,7 @@ def redirect_url(request, url):
         respuesta = {
             "old_url":url.old_route,
         }
+        aumetar_clicks(url)
         return JsonResponse(respuesta, safe=False, json_dumps_params={'ensure_ascii': False})
     except Turls.DoesNotExist:
         return JsonResponse({"error": "La url no existe"}, status=404)
-        return JsonResponse({'error': "No se ha podido crear la Url"}, status=400)
