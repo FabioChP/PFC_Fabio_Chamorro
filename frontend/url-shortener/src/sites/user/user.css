@@ -1,8 +1,61 @@
 .user-info {
+    float:  left;
     width: 30%;
     padding: 2%;
 }
 
 .user-info img {
     width: 60%;
+}
+
+/* URLS */
+
+.user-urls-box {
+
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    float:  left;
+    width: 70%;
+    padding: 2%;
+
+}
+
+.user-url-item {
+    padding: 15px;
+    border-radius: 15px;
+    background-color: #ccbfae;
+}
+
+.user-url-item:not(:first-child) {
+    margin-top: 1.5%;
+}
+
+.user-url-item td {
+    padding: 1% 0;
+}
+
+.user-url-item td:first-child {
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+.user-url-item td:last-child {
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.user-url-text {
+    color: #010101;
+    font-weight: bold;
+}
+
+.user-url-link {
+    text-decoration: underline;
+    color: #010101;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.user-url-link:hover {
+    color: #4d4d4d;
 }
