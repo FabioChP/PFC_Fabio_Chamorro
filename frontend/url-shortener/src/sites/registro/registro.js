@@ -31,6 +31,8 @@ function Registro() {
 
         if(username == "" || email == "" || password == "" || passwordRepeat == "") {
             alert("No se permiten campos en blanco");
+        } else if(password != passwordRepeat) {
+            alert("Las contraseñas deben de ser iguales")
         } else {
             axios.post("http://localhost:8000/crear_user/", {"username":username, "email":email, "password":password})
             .then(response => {
