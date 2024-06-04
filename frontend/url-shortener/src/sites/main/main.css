@@ -28,7 +28,6 @@ header {
 
 .headerLink {
     display: flex;
-    justify-content: right;
     align-items: center;
     color: #ffefda;
     text-decoration: none;
@@ -49,4 +48,17 @@ footer {
     display: flex;
     width: 100%;
     padding: 2% 1%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footerLink {
+
+    align-items: center;
+    color: #ffefda;
+    text-decoration: none;
+}
+
+.main-enlace-repo {
+    color: #ffefda;
 }
