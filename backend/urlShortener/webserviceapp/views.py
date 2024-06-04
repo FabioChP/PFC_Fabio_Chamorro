@@ -120,8 +120,15 @@ def cierre_sesion(request):
 def crear_cadena():
     chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_0123456789'
     result = ''
-    for i in range(10):
-        result = result + chars[random.randint(0, len(chars)-1)]
+    repeat = True
+    while repeat == True:
+        repeat = False
+        for i in range(10):
+            result = result + chars[random.randint(0, len(chars)-1)]
+        urls = Turls.objects.all()
+        for fila in urls:
+            if result == fila.new_route:
+                repeat = True
     return result
 
 @csrf_exempt
