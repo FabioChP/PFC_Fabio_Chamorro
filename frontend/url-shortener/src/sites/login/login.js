@@ -34,6 +34,11 @@ function Login() {
             })
             .catch(error => {
                 console.error("Error al iniciar sesion:", error);
+                if (error.response.status == 404) {
+                    alert("No existe el usuario")
+                } else if (error.response.status == 401) {
+                    alert("Contraseña incorrecta")
+                }
             })
         }
 
