@@ -14,6 +14,8 @@
 
 *[Características de la aplicación y demostración](#características-de-la-aplicación-y-demostración)
 
+*[Acceso al proyecto](#acceso-al-proyecto)
+
 *[Tecnologías utilizadas](#tecnologías-utilizadas)
 
 *[Personas-Desarrolladores del Proyecto](#desarrolladores-del-proyecto)
@@ -41,6 +43,26 @@ Con estas herramientas, los usuarios no solo podrán gestionar y compartir sus e
   - pyjwt
   - django-cors-headers
 - CSS
+
+## Acceso al proyecto
+
+### Acceso al proyecto
+Para descargar el codigo fuente lo mejor es hacer un fork del repositorio en github y despues clonarlo en tu máquina.
+- Para el frontend: instalar React y todos los módulos necesarios.
+- Para el backend: instalar Python, Django, todos los módulos necesarios y realizar las migraciones (python3 manage.py makemigrations y python3 manage.py migrate).
+- Para la base de datos: instalar un servidor MySQL, ejecutar el archivo BBDD.sql y modificar la seccion del settings.py referida a la base de datos.
+
+![imagen](https://github.com/FabioChP/PFC_Fabio_Chamorro/assets/145000582/1127943d-c16f-42b6-9c34-6654be882abf)
+
+
+### Abre y ejecuta el proyecto
+Los pasos para ejecutar el proyecto son:
+1. Abrir el terminal en la carpeta "./PFC_Fabio_Chamorro" (cmd o equivalente).
+2. Hacer "cd ./backend/urlShortener".
+3. Y ejecutar "python3 ./manage.py runserver".
+4. Hacer "cd ./../../frontend/url-shortener".
+5. Ejecutar el comando "npm start".
+6. Entrar a localhost en tu navegador preferido.
 
 ## Desarrolladores del Proyecto
 #### <em>Fabio Chamorro Prado</em>
