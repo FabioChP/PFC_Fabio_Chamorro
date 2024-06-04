@@ -9,8 +9,7 @@ import json, random, jwt
 
 import logging
 
-# Create your views here.
-
+# Como el método incorrecto lo van a tener todas las vistas lo declaro como una variable
 error_method = JsonResponse({"error":"Método incorrecto"},status=405)
 
 def comprobar_url(request, url_comprobar):
@@ -153,7 +152,7 @@ def crear_url(request):
             old_route = old_route,
             new_route = newroute,
             clicks = 0,
-            fcreacion = date.today(),
+            fcreacion = datetime.datetime.now(),
             creator = user
         )
         newUrl.save()
@@ -196,3 +195,45 @@ def redirect_url(request, url):
         return JsonResponse(respuesta, safe=False, json_dumps_params={'ensure_ascii': False})
     except Turls.DoesNotExist:
         return JsonResponse({"error": "La url no existe"}, status=404)
+    
+# --- ESTADISTICAS ---
+
+def devolver_urls_populares(request):
+    if request.method != "GET":
+        return error_method
+    
+    urls = Turls.objects.all().order_by("clicks").reverse()
+    preparacion = []
+    respuesta = []
+    for fila in urls :
+        diccionario = {}
+        diccionario["url"] = fila.new_route
+        diccionario["urlOg"] = fila.old_route
+        diccionario["clicks"] = fila.clicks
+        preparacion.append(diccionario)
+        
+    #Este código permite devolver solo las 10 primeras urls
+    for i in range(10): 
+        respuesta.append(preparacion[i])
+    return JsonResponse(respuesta, safe=False, json_dumps_params={'ensure_ascii': False})
+
+def devolver_urls_nuevas(request):
+    if request.method != "GET":
+        return error_method
+    
+    urls = Turls.objects.all().order_by("fcreacion").reverse()
+    preparacion = []
+    respuesta = []
+    for fila in urls :
+        diccionario = {}
+        diccionario["url"] = fila.new_route
+        diccionario["urlOg"] = fila.old_route
+        diccionario["fecha"] = fila.fcreacion
+        preparacion.append(diccionario)
+        
+    #Este código permite devolver solo las 10 primeras urls
+    for i in range(10): 
+        respuesta.append(preparacion[i])
+    return JsonResponse(respuesta, safe=False, json_dumps_params={'ensure_ascii': False})
+            
+    
