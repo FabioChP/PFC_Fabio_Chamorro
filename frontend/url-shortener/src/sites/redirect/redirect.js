@@ -16,6 +16,9 @@ export default function Redirect() {
             setUrl(response.data.old_url)
         }). catch((error) => {
             console.log(error)
+            if (error.response.status == 404) {
+                alert("La url indicada no existe")
+            }
         })
     }
 
@@ -25,6 +28,6 @@ export default function Redirect() {
 
        <button className="redirect-button" onClick={onClickRedirect}> <h1>Ir a la página</h1></button>
        
-       <p className="redirect-legal-text">Urlcutter no se hace responsable de la página en la que acabe, por favor navegue con cuidado</p>
+       <p className="redirect-legal-text">UrlCutter no se hace responsable de la página en la que acabe, por favor navegue con cuidado</p>
     </>
 }

@@ -11,12 +11,10 @@ function Stats() {
 
     useEffect(() => {
         axios.get("http://localhost:8000/url_populares").then(((response) => {
-            console.log(response.data)
             setPopuls(response.data)
         }))
 
         axios.get("http://localhost:8000/url_nuevas").then(((response) => {
-            console.log(response.data)
             setNews(response.data)
         }))
     },[])

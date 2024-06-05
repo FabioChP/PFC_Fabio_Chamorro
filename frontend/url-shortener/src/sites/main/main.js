@@ -30,7 +30,7 @@ if (user_link != "/user/null") {
         </header>
         {<Outlet />}
         <footer>
-            <Link to="/" className="footerLink">URL SHORTENER</Link>
+            <Link to="/" className="footerLink">URLCUTTER</Link>
             <p className="main-enlace-repo">
                 Enlace al repositorio: <a className="main-enlace-repo" href="https://github.com/FabioChP/PFC_Fabio_Chamorro">https://github.com/FabioChP/PFC_Fabio_Chamorro</a>
             </p>

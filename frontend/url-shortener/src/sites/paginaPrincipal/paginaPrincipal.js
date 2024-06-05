@@ -42,8 +42,9 @@ function PaginaPrincipal() {
 
     return <>
         <div className="principal-area">
-            <div className="principal-caja">
-                <h1>URL SHORTENER</h1>
+            <h1>URLCUTTER</h1>
+            <div className="principal-caja"> 
+                <h2>URL SHORTENER</h2>
                 <form>
                     <input onChange={onChangeUrl} id="url" className="principal-textInput" type="url" placeholder={"https://www.example.url/"}></input>
                     <input onClick={Subir} className="principal-button" type="submit" id="submit" value="Subir"/>
