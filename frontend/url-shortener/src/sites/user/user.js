@@ -13,11 +13,9 @@ export default function User() {
 
     useEffect(() => {
         axios.get("http://localhost:8000/usuario/"+params.username).then((response) => {
-            console.log(response)
             setName(response.data.nombre);
             setEmail(response.data.email);
             setUrls(response.data.urls);
-            console.log(response.data.urls)
         })
     },[])
 
@@ -37,7 +35,5 @@ export default function User() {
             </tr>
                 {urls.map((u) => {return <CrearListaUrls url={u}/>} )}
         </table>
-        <table>
-</table>
     </>
 }

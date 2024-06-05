@@ -1,5 +1,9 @@
 .principal-area {
-    margin: 7% 0;
+    margin: 3% 0;
+}
+
+.principal-area > h1 {
+    font-size: 350%;
 }
 
 .principal-caja {
