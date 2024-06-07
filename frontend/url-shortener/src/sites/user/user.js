@@ -7,8 +7,8 @@ import CrearListaUrls from "./components/crearListaUrls"
 
 export default function User() {
     const params = useParams();
-    const[name, setName] = useState("Generic");
-    const[email, setEmail] = useState("email@generic.com");
+    const[name, setName] = useState("Loading...");
+    const[email, setEmail] = useState("Loading...");
     const[urls, setUrls] = useState([]);
 
     useEffect(() => {
