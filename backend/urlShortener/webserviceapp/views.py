@@ -12,20 +12,17 @@ import logging
 # Como el método incorrecto lo van a tener todas las vistas lo declaro como una variable
 error_method = JsonResponse({"error":"Método incorrecto"},status=405)
 
-def comprobar_url(request, url_comprobar):
-    if request.method != "GET":
-        return error_method
-    urls = Turls.objects.get(url = url_comprobar)
-    return JsonResponse ({"se_repite":len(urls)}, safe = False, json_dumps_params={'ensure_ascii': False})
-
 # --- GESTIÓN DEL TOKEN ---
 
 SECRET_KEY = '3st@Cl4v3es1mp0s1bl3deR0mp3ryN03sp3r0qu3n@d1eL0inTente'
 
+#
+# Método interno de creación de token
+# Crea la cadena secreta que identificara a la sesión
+# 
 def create_token(nombreusuario):
 	payload = {
 		'nombreusuario': nombreusuario,
-		'exp': datetime.datetime.utcnow() + datetime.timedelta(days=1),
 		'iat': datetime.datetime.utcnow()
 	}
 	token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
@@ -34,6 +31,9 @@ def create_token(nombreusuario):
 
 # --- GESTIÓN DE USUARIOS ---
 
+#
+# Método de creación de usuario
+# 
 @csrf_exempt
 def crear_usuario(request):
 	if request.method != 'POST':
@@ -52,12 +52,13 @@ def crear_usuario(request):
 	else:
 		return JsonResponse({'error': 'Usuario existente'}, status=404)
 
+#
+# Método que devuelve un usuario para la página User
+# 
 def devolver_usuario(request, username):
     try:
         usuario = Tusers.objects.get(uname = username)
-    
         urls = usuario.turls_set.all()
-        
         lista_urls = []
         for fila in urls:
             diccionario = {}
@@ -66,7 +67,6 @@ def devolver_usuario(request, username):
             diccionario['clicks'] = fila.clicks
             diccionario['fcreacion'] = fila.fcreacion
             lista_urls.append(diccionario)
-        
         respuesta = {
             'nombre':usuario.uname,
             'email': usuario.email,
@@ -79,6 +79,9 @@ def devolver_usuario(request, username):
 
 # --- GESTIÓN DE SESIONES ---
 
+#
+# Método de inicio de sesión
+# 
 @csrf_exempt
 def inicio_sesion(request):
     if request.method == 'POST':
@@ -99,6 +102,9 @@ def inicio_sesion(request):
     else:
         return JsonResponse({'error': 'metodo no soportado'}, status=405)
     
+#
+# Método de cierre de sesión
+# 
 @csrf_exempt
 def cierre_sesion(request):
     if request.method == 'PATCH':	
@@ -115,7 +121,10 @@ def cierre_sesion(request):
 
 # --- GESTIÓN DE URLS ---
 
-
+#
+# Método interno de creación de la cádena
+# Devuelve una cadena de 10 carácteres que servira de url acortada
+# 
 def crear_cadena():
     chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_0123456789'
     result = ''
@@ -130,19 +139,20 @@ def crear_cadena():
                 repeat = True
     return result
 
+#
+# Método de creación de url acortada
+# Llama al método anterior
+# 
 @csrf_exempt
 def crear_url(request):
     if request.method != "POST":
         return error_method
-    
     data = json.loads(request.body)
-
     session_token = request.headers.get("Authorization", None)
     try:
         user = Tusers.objects.get(session_token = session_token)
     except Tusers.DoesNotExist:
         return JsonResponse({'error': "request.headers"}, status=403)
-
     old_route = data["url"]
     try:
         old_url = Turls.objects.get(old_route = old_route)
@@ -159,33 +169,24 @@ def crear_url(request):
         return JsonResponse({"new_url" : newroute}, safe=False, json_dumps_params={'ensure_ascii': False})
     else:
         return JsonResponse({'error': "No se ha podido crear la Url"}, status=404)
-
-# def devolver_url(request, old_url):
-#     if request.method != "GET":
-#         return error_method
-    
-#     try:
-#         url = Turls.objects.get(old_route = old_url)
-#         respuesta = {
-#             "new_url":  url.new_route
-#         }
-#         return JsonResponse(respuesta, safe=False, json_dumps_params={'ensure_ascii': False})
-#     except Tusers.DoesNotExist:
-#         return JsonResponse({'error': "La url no existe"}, status=404)
-    
-
  
 # --- REDIRECCIÓN ---
 
+#
+# Método que aumenta la cantidad de clicks de una url en 1
+# 
 def aumetar_clicks(url):
     clicks_actuales = url.clicks
     url.clicks = clicks_actuales + 1
     url.save()
 
+#
+# Método de la página de redirección
+# Llama al método "aumentar_clicks" y devuelve la url original
+# 
 def redirect_url(request, url):
     if request.method != "GET":
         return error_method
-    
     try:
         url = Turls.objects.get(new_route = url)
         respuesta = {
@@ -198,10 +199,12 @@ def redirect_url(request, url):
     
 # --- ESTADISTICAS ---
 
+#
+# Devuelve una lista con las 10 urls con más clicks en orden descendente 
+# 
 def devolver_urls_populares(request):
     if request.method != "GET":
         return error_method
-    
     urls = Turls.objects.all().order_by("clicks").reverse()
     preparacion = []
     respuesta = []
@@ -212,11 +215,15 @@ def devolver_urls_populares(request):
         diccionario["clicks"] = fila.clicks
         preparacion.append(diccionario)
         
-    #Este código permite devolver solo las 10 primeras urls
-    for i in range(10): 
+    #Este fragmento de código permite devolver solo las 10 primeras urls
+    for i in range(10):  
         respuesta.append(preparacion[i])
     return JsonResponse(respuesta, safe=False, json_dumps_params={'ensure_ascii': False})
 
+
+#
+# Devuelve una lista con las 10 url más recientes en orden descendente
+# 
 def devolver_urls_nuevas(request):
     if request.method != "GET":
         return error_method
